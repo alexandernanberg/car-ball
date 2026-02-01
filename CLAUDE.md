@@ -1,6 +1,6 @@
 # Project Overview
 
-3D game development sandbox with physics simulation. Features a playground scene with character controller, physics objects, and interactive elements.
+3D game development sandbox with physics simulation. Features a playground scene with physics objects and interactive elements.
 
 ## Tech Stack
 
@@ -132,19 +132,6 @@ Custom physics integration at `src/ecs/physics/`. Wraps Rapier with ECS traits.
 ```
 
 Collider types: `BallCollider`, `CuboidCollider`, `CapsuleCollider`, `CylinderCollider`, `ConeCollider`, `ConvexHullCollider`
-
-### Character Controller
-
-```tsx
-;<CharacterController ref={controllerRef} height={1.75} radius={0.5}>
-  <mesh>...</mesh>
-</CharacterController>
-
-// In update loop
-usePhysicsUpdate((delta) => {
-  controller.setVelocity(vx, vy, vz)
-})
-```
 
 ## Key Conventions
 

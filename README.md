@@ -1,35 +1,42 @@
-# Sandbox
+# Car Ball
 
-> Game development sandbox
+A browser-based car soccer game. Drive rocket-powered cars, hit a giant ball, score goals.
 
-## Roadmap
+## Getting Started
 
-### Character controller
+```bash
+pnpm install
+pnpm run dev
+```
 
-- [ ] Movement (sprint, crouch, jump)
-- [ ] Jump buffer
-- [ ] Jump forgiveness
-- [ ] State machine
-- [ ] Animations
+Open `http://localhost:3001`
 
-### Camera
+## Controls
 
-- [ ] Orbiting 3rd person camera (similar to GTA)
-- [ ] Collision avoidance
-  - Use ray casts between camera and player (whiskers, 7 casts)
+| Input | Action        |
+| ----- | ------------- |
+| WASD  | Drive / Steer |
+| Space | Jump          |
+| Shift | Boost         |
+| Q / E | Air roll      |
 
-### World prototyping
+## Tech Stack
 
-- [ ] Add more obstacles, ramps, and surfaces to test movement
-- [ ] Experiment with lighting, shadows, and basic environmental effects
+- [Koota](https://github.com/pmndrs/koota) - Entity Component System
+- [Rapier](https://rapier.rs/) - Physics (WASM)
+- [Three.js](https://threejs.org/) - 3D rendering
+- [React 19](https://react.dev/) - UI
+- [Vite](https://vitejs.dev/) - Build tool
 
-### ECS Migration
+## Scripts
 
-- [x] Player movement - move from `usePhysicsUpdate` to ECS system with `PlayerInput`, `PlayerMovement` traits
-- [ ] Elevator/Oscillator - generic oscillation trait + system for kinematic bodies
-- [x] Input state - singleton trait for input so ECS systems can read directly
+```bash
+pnpm run dev         # Dev server
+pnpm run build       # Production build
+pnpm run typecheck   # Type checking
+pnpm run lint        # Linting
+```
 
-### Misc
+## License
 
-- [ ] Replace `useAsset`/`useTexture` with `use(loadAsset("/path"))` https://github.com/pmndrs/react-three-fiber/issues/3411
-- [ ] Nicer skybox (Sky3D?)
+MIT
