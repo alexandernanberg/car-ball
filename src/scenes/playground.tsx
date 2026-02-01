@@ -6,16 +6,9 @@ import type {ComponentProps} from 'react'
 import {Suspense, useLayoutEffect, useRef, useState} from 'react'
 import {RepeatWrapping} from 'three'
 import {OrbitDebugVisualizer, ThirdPersonCamera} from '~/components/cameras'
-import {useControls, useMonitor} from '~/components/debug-controls'
-import {
-  actions,
-  IsPlayer,
-  PlayerMovementConfig,
-  PlayerVelocity,
-  FacingDirection,
-} from '~/ecs'
+import {useControls} from '~/components/debug-controls'
+import {actions} from '~/ecs'
 import {Balls} from '~/ecs/balls'
-import {IsCameraTarget} from '~/ecs/camera'
 import {
   RigidBody,
   CuboidCollider,
@@ -24,11 +17,8 @@ import {
   CylinderCollider,
   usePhysicsUpdate,
   RigidBodyRef,
-  CharacterController,
-  CharacterMovement,
   KinematicVelocity,
 } from '~/ecs/physics'
-import type {CharacterControllerApi} from '~/ecs/physics'
 import Ramp from '~/models/ramp'
 import Slope from '~/models/slope'
 import Stone from '~/models/stone'
@@ -62,7 +52,6 @@ export function Playground({debugCamera, showOrbitRings}: PlaygroundProps) {
     <>
       {!debugCamera && <ThirdPersonCamera />}
       {showOrbitRings && <OrbitDebugVisualizer />}
-      <Player position={[0, 2, 0]} />
 
       <Floor />
       <Walls />
@@ -364,22 +353,6 @@ function Floor() {
   )
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars -- kept for future use
-function Wall() {
-  const wallTexture = useTexture('/textures/prototype/light/texture_12.png')
-
-  return (
-    <RigidBody type="fixed" position={[5, 3 / 2, 2]}>
-      <CuboidCollider args={[1, 3, 6]}>
-        <mesh castShadow receiveShadow>
-          <boxGeometry args={[1, 3, 6]} />
-          <meshPhongMaterial map={wallTexture} />
-        </mesh>
-      </CuboidCollider>
-    </RigidBody>
-  )
-}
-
 function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max)
 }
@@ -627,108 +600,5 @@ function Stairs({
     <RigidBody type="fixed" position={position}>
       {steps}
     </RigidBody>
-  )
-}
-
-// ============================================
-// Player with ECS-driven movement
-// ============================================
-
-interface PlayerProps {
-  position?: [number, number, number]
-}
-
-function Player({position}: PlayerProps) {
-  const controllerRef = useRef<CharacterControllerApi | null>(null)
-
-  // KCC debug monitor
-  const kccDebug = useMonitor(
-    'KCC Debug',
-    {
-      state: {label: 'State', type: 'string'},
-      groundY: {label: 'Ground Y', format: (v) => v.toFixed(3)},
-      groundDist: {label: 'Ground Dist', format: (v) => v.toFixed(3)},
-      coyote: {label: 'Coyote'},
-      inputVel: {label: 'Input Vel', type: 'string'},
-      moveVel: {label: 'Move Vel', type: 'string'},
-      posY: {label: 'Pos Y', format: (v) => v.toFixed(3)},
-    },
-    {expanded: true, index: 0},
-  )
-
-  // Update debug values each physics frame
-  usePhysicsUpdate(() => {
-    const controller = controllerRef.current
-    if (!controller || !controller.entity.isAlive()) return
-
-    const movement = controller.entity.get(CharacterMovement)
-    if (!movement) return
-
-    // State as readable string
-    const state = movement.grounded
-      ? 'Grounded'
-      : movement.sliding
-        ? 'Sliding'
-        : 'Airborne'
-    // eslint-disable-next-line react-compiler/react-compiler -- intentional mutation for debug monitor
-    kccDebug.current.state = state
-    kccDebug.current.groundY = movement.groundNormalY
-    kccDebug.current.groundDist = movement.groundDistance
-    kccDebug.current.coyote = movement.coyoteCounter
-
-    // Format vectors as strings
-    const fmt = (x: number, y: number, z: number) =>
-      `${x.toFixed(2)} ${y.toFixed(2)} ${z.toFixed(2)}`
-    kccDebug.current.inputVel = fmt(movement.vx, movement.vy, movement.vz)
-    kccDebug.current.moveVel = fmt(movement.mx, movement.my, movement.mz)
-
-    // Get Y position from rigid body
-    const bodyRef = controller.entity.get(RigidBodyRef)
-    if (bodyRef?.body) {
-      kccDebug.current.posY = bodyRef.body.translation().y
-    }
-  })
-
-  // Add player traits to the character controller entity
-  useLayoutEffect(() => {
-    const controller = controllerRef.current
-    if (!controller) return
-
-    const entity = controller.entity
-
-    // Add player traits
-    entity.add(IsPlayer)
-    entity.add(PlayerMovementConfig)
-    entity.add(PlayerVelocity)
-    entity.add(FacingDirection)
-    entity.add(IsCameraTarget)
-
-    return () => {
-      if (entity.isAlive()) {
-        entity.remove(IsPlayer)
-        entity.remove(PlayerMovementConfig)
-        entity.remove(PlayerVelocity)
-        entity.remove(FacingDirection)
-        entity.remove(IsCameraTarget)
-      }
-    }
-  }, [])
-
-  return (
-    <CharacterController
-      ref={controllerRef}
-      position={position}
-      height={1.75}
-      radius={0.5}
-    >
-      <mesh castShadow receiveShadow>
-        <capsuleGeometry args={[0.5, 1.75, 4, 8]} />
-        <meshPhongMaterial color={0xf0f0f0} />
-      </mesh>
-      <mesh castShadow receiveShadow position={[0, 1.15, 0.3]}>
-        <boxGeometry args={[0.5, 0.25, 0.5]} />
-        <meshPhongMaterial color={0xf0f0f0} />
-      </mesh>
-    </CharacterController>
   )
 }

@@ -38,14 +38,6 @@ export {
   isCollidingWith,
 } from './events'
 
-// Character controller
-export {
-  CharacterShapeRef,
-  CharacterControllerConfig,
-  CharacterMovement,
-  IsCharacterController,
-} from './character'
-
 // Physics world (ECS-centric, can be used outside React)
 export {
   physicsWorld,
@@ -126,16 +118,3 @@ export {
 } from './systems'
 
 export {processCollisionEvents, clearCollisionEvents} from './events'
-
-export {
-  characterControllerSystem,
-  createCharacterController,
-  cleanupCharacterController,
-} from './character'
-
-// Character controller React component
-export {CharacterController} from './character-controller'
-export type {
-  CharacterControllerProps,
-  CharacterControllerApi,
-} from './character-controller'

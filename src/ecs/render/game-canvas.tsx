@@ -12,13 +12,13 @@
  * - Game logic (handled by ECS systems)
  */
 
-import {useEffect, useRef, useCallback} from 'react'
-import * as THREE from 'three'
 import type {World} from 'koota'
 import {useWorld} from 'koota/react'
-import {renderUpdate} from './systems'
-import {stepPhysics} from '../physics/step'
+import {useEffect, useRef, useCallback} from 'react'
+import * as THREE from 'three'
 import type {StepResult} from '../physics/step'
+import {stepPhysics} from '../physics/step'
+import {renderUpdate} from './systems'
 
 export interface GameCanvasProps {
   /** Called once when the game is ready to load content */

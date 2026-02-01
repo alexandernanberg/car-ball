@@ -1,11 +1,18 @@
 import {useFrame, useThree} from '@react-three/fiber'
 import type {Entity} from 'koota'
+import {trait} from 'koota'
 import {useWorld} from 'koota/react'
 import {useEffect, useLayoutEffect, useRef} from 'react'
 import {CameraInput} from '~/ecs/camera'
-import {Input} from '~/ecs/player'
 import type {Vec2} from '~/lib/math'
 import {useConstant} from '~/utils'
+
+// Input trait for generic input state
+export const Input = trait(() => ({
+  movement: {x: 0, y: 0} as Vec2,
+  jump: false,
+  sprint: false,
+}))
 
 interface InputManagerState {
   movement: Vec2

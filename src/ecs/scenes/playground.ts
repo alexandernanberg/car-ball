@@ -7,13 +7,7 @@
 
 import type {World, Entity} from 'koota'
 import {createActions} from 'koota'
-import {
-  spawnStaticBody,
-  spawnRigidBody,
-  spawnKinematicBody,
-  spawnLight,
-  prefab,
-} from '../render'
+import {IsCameraTarget} from '../camera'
 import {
   Transform,
   PreviousTransform,
@@ -29,18 +23,24 @@ import {
   CharacterMovement,
 } from '../physics'
 import {
-  Geometry,
-  MaterialComponent,
-  MeshComponent,
-  NeedsRenderSetup,
-} from '../render/traits'
-import {
   IsPlayer,
   PlayerMovementConfig,
   PlayerVelocity,
   FacingDirection,
 } from '../player'
-import {IsCameraTarget} from '../camera'
+import {
+  spawnStaticBody,
+  spawnRigidBody,
+  spawnKinematicBody,
+  spawnLight,
+  prefab,
+} from '../render'
+import {
+  Geometry,
+  MaterialComponent,
+  MeshComponent,
+  NeedsRenderSetup,
+} from '../render/traits'
 
 // ============================================
 // Scene spawning actions
@@ -100,7 +100,13 @@ export const playgroundActions = createActions((world) => ({
     // Spinning platforms
     entities.push(spawnSpinningPlatform(world, [-12, 0.5, 8], 1.5))
     entities.push(
-      spawnSpinningPlatform(world, [-12, 0.5, -8], 0.8, [10, 0.25, 2], 0xd94a90),
+      spawnSpinningPlatform(
+        world,
+        [-12, 0.5, -8],
+        0.8,
+        [10, 0.25, 2],
+        0xd94a90,
+      ),
     )
 
     // Trampoline
@@ -198,7 +204,13 @@ function spawnPlayer(world: World, position: [number, number, number]): Entity {
     FacingDirection,
     IsCameraTarget,
     Geometry({
-      descriptor: {type: 'capsule', radius, length: height, capSegments: 4, radialSegments: 8},
+      descriptor: {
+        type: 'capsule',
+        radius,
+        length: height,
+        capSegments: 4,
+        radialSegments: 8,
+      },
     }),
     MaterialComponent({type: 'phong', color: 0xf0f0f0}),
     MeshComponent({castShadow: true, receiveShadow: true}),
@@ -216,7 +228,10 @@ function spawnPlayer(world: World, position: [number, number, number]): Entity {
   return entity
 }
 
-function spawnElevator(world: World, position: [number, number, number]): Entity {
+function spawnElevator(
+  world: World,
+  position: [number, number, number],
+): Entity {
   const entity = spawnKinematicBody(world, {
     mesh: {
       geometry: {type: 'box', width: 2, height: 0.5, depth: 2},
@@ -251,7 +266,12 @@ function spawnSpinningPlatform(
       material: {type: 'standard', color},
     },
     collider: {
-      shape: {type: 'cuboid', hx: size[0] / 2, hy: size[1] / 2, hz: size[2] / 2},
+      shape: {
+        type: 'cuboid',
+        hx: size[0] / 2,
+        hy: size[1] / 2,
+        hz: size[2] / 2,
+      },
     },
     transform: {position},
     positionBased: true,
@@ -337,7 +357,12 @@ function spawnStairs(
         offsetZ: z,
       }),
       Geometry({
-        descriptor: {type: 'box', width: stepWidth, height: stepHeight, depth: stepDepth},
+        descriptor: {
+          type: 'box',
+          width: stepWidth,
+          height: stepHeight,
+          depth: stepDepth,
+        },
       }),
       MaterialComponent({type: 'standard', color: 0x808080}),
       MeshComponent({castShadow: true, receiveShadow: true}),
@@ -347,7 +372,10 @@ function spawnStairs(
   return stairsEntity
 }
 
-function spawnTower(world: World, position: [number, number, number]): Entity[] {
+function spawnTower(
+  world: World,
+  position: [number, number, number],
+): Entity[] {
   const entities: Entity[] = []
 
   // Tower pillars
@@ -404,12 +432,24 @@ function spawnTower(world: World, position: [number, number, number]): Entity[] 
       ChildOf(towerEntity),
       NeedsRenderSetup,
       ColliderConfig({
-        shape: {type: 'cuboid', hx: size[0] / 2, hy: size[1] / 2, hz: size[2] / 2},
+        shape: {
+          type: 'cuboid',
+          hx: size[0] / 2,
+          hy: size[1] / 2,
+          hz: size[2] / 2,
+        },
         offsetX: pos[0],
         offsetY: pos[1],
         offsetZ: pos[2],
       }),
-      Geometry({descriptor: {type: 'box', width: size[0], height: size[1], depth: size[2]}}),
+      Geometry({
+        descriptor: {
+          type: 'box',
+          width: size[0],
+          height: size[1],
+          depth: size[2],
+        },
+      }),
       MaterialComponent({type: 'phong', color: 0xfffff0}),
       MeshComponent({castShadow: true, receiveShadow: true}),
     )

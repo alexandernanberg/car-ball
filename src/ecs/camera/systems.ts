@@ -1,7 +1,7 @@
 import * as RAPIER from '@alexandernanberg/rapier3d/compat-simd'
 import {createQuery} from 'koota'
 import type {World} from 'koota'
-import {CharacterMovement, RigidBodyRef, RenderTransform} from '../physics'
+import {RigidBodyRef, RenderTransform} from '../physics'
 import {getRapierWorld} from '../physics/world'
 import {
   noise2D,
@@ -150,18 +150,17 @@ export function cameraUpdateSystem(world: World, delta: number) {
       _targetPos.z = transform.z
       hasTarget = true
 
-      if (entity.has(CharacterMovement)) {
-        const movement = entity.get(CharacterMovement)!
-        _targetVelocity.x = movement.mx
-        _targetVelocity.y = movement.my
-        _targetVelocity.z = movement.mz
-        hasVelocity = true
-      }
-
-      // Get rigid body to exclude from collision checks
+      // Get rigid body velocity if available
       if (entity.has(RigidBodyRef)) {
         const bodyRef = entity.get(RigidBodyRef)!
         targetRigidBody = bodyRef.body
+        if (bodyRef.body && !bodyRef.body.isFixed()) {
+          const linvel = bodyRef.body.linvel()
+          _targetVelocity.x = linvel.x
+          _targetVelocity.y = linvel.y
+          _targetVelocity.z = linvel.z
+          hasVelocity = true
+        }
       }
       break
     }

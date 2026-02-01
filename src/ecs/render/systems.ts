@@ -1,5 +1,6 @@
 import type {World} from 'koota'
 import * as THREE from 'three'
+import {RenderTransform} from '../physics/traits'
 import {
   Geometry,
   MaterialComponent,
@@ -14,7 +15,6 @@ import {
   type MaterialType,
   type LightType,
 } from './traits'
-import {RenderTransform} from '../physics/traits'
 
 // ============================================
 // Geometry factory

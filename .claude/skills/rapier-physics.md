@@ -1,6 +1,6 @@
 # Rapier Physics Engine (JavaScript/WASM)
 
-Rapier is a high-performance physics engine used for 3D physics simulation. This project uses `@dimforge/rapier3d-simd-compat` for WASM with SIMD support.
+Rapier is a high-performance physics engine used for 3D physics simulation. This project uses `@alexandernanberg/rapier3d/compat-simd` for WASM with SIMD support.
 
 ## Core Concepts
 

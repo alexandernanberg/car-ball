@@ -1,16 +1,5 @@
 import type {World, Entity} from 'koota'
 import {
-  Geometry,
-  MaterialComponent,
-  MeshComponent,
-  LocalTransform,
-  LightComponent,
-  NeedsRenderSetup,
-  type GeometryDescriptor,
-  type MaterialType,
-  type LightType,
-} from './traits'
-import {
   Transform,
   PreviousTransform,
   RenderTransform,
@@ -22,6 +11,17 @@ import {
   type RigidBodyType,
   type ColliderShape,
 } from '../physics/traits'
+import {
+  Geometry,
+  MaterialComponent,
+  MeshComponent,
+  LocalTransform,
+  LightComponent,
+  NeedsRenderSetup,
+  type GeometryDescriptor,
+  type MaterialType,
+  type LightType,
+} from './traits'
 
 // ============================================
 // Spawn options types
@@ -361,12 +361,22 @@ export const prefab = {
   ): Entity {
     return spawnRigidBody(world, {
       mesh: {
-        geometry: {type: 'box', width: size[0], height: size[1], depth: size[2]},
+        geometry: {
+          type: 'box',
+          width: size[0],
+          height: size[1],
+          depth: size[2],
+        },
         material: {color: options?.color ?? 0xff0000},
       },
       body: {type: options?.bodyType ?? 'dynamic'},
       collider: {
-        shape: {type: 'cuboid', hx: size[0] / 2, hy: size[1] / 2, hz: size[2] / 2},
+        shape: {
+          type: 'cuboid',
+          hx: size[0] / 2,
+          hy: size[1] / 2,
+          hz: size[2] / 2,
+        },
         restitution: options?.restitution ?? 0,
         friction: options?.friction ?? 0.5,
       },
@@ -438,7 +448,12 @@ export const prefab = {
   ): Entity {
     return spawnStaticBody(world, {
       collider: {
-        shape: {type: 'cuboid', hx: size[0] / 2, hy: size[1] / 2, hz: size[2] / 2},
+        shape: {
+          type: 'cuboid',
+          hx: size[0] / 2,
+          hy: size[1] / 2,
+          hz: size[2] / 2,
+        },
       },
       transform: {position},
     })

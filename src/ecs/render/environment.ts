@@ -13,11 +13,16 @@ import {trait} from 'koota'
 import type {World} from 'koota'
 import * as THREE from 'three'
 import {EffectComposer} from 'three/examples/jsm/postprocessing/EffectComposer.js'
-import {RenderPass} from 'three/examples/jsm/postprocessing/RenderPass.js'
-import {UnrealBloomPass} from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
-import {SMAAPass} from 'three/examples/jsm/postprocessing/SMAAPass.js'
 import {OutputPass} from 'three/examples/jsm/postprocessing/OutputPass.js'
-import {LocalTransform, SceneNode, NeedsRenderSetup, IsRenderable} from './traits'
+import {RenderPass} from 'three/examples/jsm/postprocessing/RenderPass.js'
+import {SMAAPass} from 'three/examples/jsm/postprocessing/SMAAPass.js'
+import {UnrealBloomPass} from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
+import {
+  LocalTransform,
+  SceneNode,
+  NeedsRenderSetup,
+  IsRenderable,
+} from './traits'
 
 // ============================================
 // Light Traits
@@ -401,11 +406,7 @@ export function spawnAmbientLight(
   color: number = 0xffffff,
   intensity: number = 0.5,
 ) {
-  return world.spawn(
-    NeedsRenderSetup,
-    Light({color, intensity}),
-    AmbientLight,
-  )
+  return world.spawn(NeedsRenderSetup, Light({color, intensity}), AmbientLight)
 }
 
 export function spawnDirectionalLight(

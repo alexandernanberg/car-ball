@@ -5,19 +5,19 @@
  * React is only used for UI overlay (separate DOM layer).
  */
 
+import RAPIER from '@alexandernanberg/rapier3d/compat-simd'
+import type {World} from 'koota'
 import * as THREE from 'three'
 import type {EffectComposer} from 'three/examples/jsm/postprocessing/EffectComposer.js'
-import type {World} from 'koota'
-import RAPIER from '@alexandernanberg/rapier3d/compat-simd'
 import {world} from '../index'
-import {initPhysicsWorld, destroyPhysicsWorld} from '../physics/world'
 import {stepPhysics} from '../physics/step'
-import {renderUpdate} from './systems'
+import {initPhysicsWorld, destroyPhysicsWorld} from '../physics/world'
 import {
   lightSetupSystem,
   environmentSetupSystem,
   setupPostProcessing,
 } from './environment'
+import {renderUpdate} from './systems'
 
 export interface GameConfig {
   /** Container element to mount canvas */
@@ -55,7 +55,10 @@ export class Game {
       powerPreference: 'high-performance',
     })
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    this.renderer.setSize(config.container.clientWidth, config.container.clientHeight)
+    this.renderer.setSize(
+      config.container.clientWidth,
+      config.container.clientHeight,
+    )
     this.renderer.shadowMap.enabled = config.shadows ?? true
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping

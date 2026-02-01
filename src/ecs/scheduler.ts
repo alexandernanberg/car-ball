@@ -147,7 +147,8 @@ export interface SystemOptions {
 
 export class GameScheduler {
   private schedule: Schedule<SystemContext>
-  private conditionalSystems: Map<System, (ctx: SystemContext) => boolean> = new Map()
+  private conditionalSystems: Map<System, (ctx: SystemContext) => boolean> =
+    new Map()
 
   constructor() {
     this.schedule = createGameSchedule()

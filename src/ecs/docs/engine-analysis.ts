@@ -153,7 +153,7 @@ const layer2_systems = {
 const layer3_performance = {
   culling: {
     effort: '3-5 days',
-    description: 'Don\'t render what camera can\'t see',
+    description: "Don't render what camera can't see",
     features: [
       'Frustum culling',
       'Occlusion culling',
@@ -233,11 +233,7 @@ const layer5_platform = {
   buildPipeline: {
     effort: '2-3 days',
     description: 'Production builds',
-    features: [
-      'Asset optimization',
-      'Code splitting',
-      'Compression',
-    ],
+    features: ['Asset optimization', 'Code splitting', 'Compression'],
   },
   desktop: {
     effort: '1 week',
@@ -252,11 +248,7 @@ const layer5_platform = {
   saves: {
     effort: '2-3 days',
     description: 'Save/load game state',
-    features: [
-      'Serialize ECS world',
-      'Cloud saves',
-      'Autosave',
-    ],
+    features: ['Serialize ECS world', 'Cloud saves', 'Autosave'],
   },
 }
 
@@ -298,7 +290,7 @@ const layer5_platform = {
 // ============================================
 
 const alternatives = {
-  'Threlte': {
+  Threlte: {
     description: 'Svelte + Three.js',
     pros: ['Good DX', 'Active community'],
     cons: ['Svelte not React', 'Not pure ECS'],
@@ -308,7 +300,7 @@ const alternatives = {
     pros: ['Complete', 'Good docs', 'Editor'],
     cons: ['Not ECS', 'Heavier'],
   },
-  'PlayCanvas': {
+  PlayCanvas: {
     description: 'WebGL game engine',
     pros: ['Editor', 'Complete', 'Performant'],
     cons: ['Not ECS', 'Commercial focus'],

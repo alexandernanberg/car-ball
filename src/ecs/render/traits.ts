@@ -15,9 +15,26 @@ import type {
 
 export type GeometryDescriptor =
   | {type: 'box'; width: number; height: number; depth: number}
-  | {type: 'sphere'; radius: number; widthSegments?: number; heightSegments?: number}
-  | {type: 'capsule'; radius: number; length: number; capSegments?: number; radialSegments?: number}
-  | {type: 'cylinder'; radiusTop: number; radiusBottom: number; height: number; radialSegments?: number}
+  | {
+      type: 'sphere'
+      radius: number
+      widthSegments?: number
+      heightSegments?: number
+    }
+  | {
+      type: 'capsule'
+      radius: number
+      length: number
+      capSegments?: number
+      radialSegments?: number
+    }
+  | {
+      type: 'cylinder'
+      radiusTop: number
+      radiusBottom: number
+      height: number
+      radialSegments?: number
+    }
   | {type: 'cone'; radius: number; height: number; radialSegments?: number}
   | {type: 'plane'; width: number; height: number}
   | {type: 'custom'; geometry: BufferGeometry}
@@ -108,7 +125,12 @@ export const PerspectiveCameraComponent = trait(() => ({
 // Light traits
 // ============================================
 
-export type LightType = 'ambient' | 'directional' | 'point' | 'spot' | 'hemisphere'
+export type LightType =
+  | 'ambient'
+  | 'directional'
+  | 'point'
+  | 'spot'
+  | 'hemisphere'
 
 export const LightComponent = trait(() => ({
   type: 'point' as LightType,

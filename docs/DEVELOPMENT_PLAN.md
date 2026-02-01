@@ -3,6 +3,7 @@
 ## Project Setup
 
 ### New Repository Structure
+
 ```
 car-ball/
 ├── src/
@@ -39,6 +40,7 @@ car-ball/
 ```
 
 ### Tech Stack
+
 ```json
 {
   "dependencies": {
@@ -65,12 +67,13 @@ car-ball/
 > Goal: Driveable car, ball, goals, scoring. Playable 1v1 free play.
 
 ### 1.1 Vehicle System
+
 - [ ] **Vehicle traits**
   ```typescript
-  VehicleInput      // throttle, steer, jump, boost, airRoll
-  VehicleState      // speed, isGrounded, isFlipping, boostAmount
-  VehicleConfig     // maxSpeed, boostAccel, turnRate, jumpForce
-  IsVehicle         // Tag trait
+  VehicleInput // throttle, steer, jump, boost, airRoll
+  VehicleState // speed, isGrounded, isFlipping, boostAmount
+  VehicleConfig // maxSpeed, boostAccel, turnRate, jumpForce
+  IsVehicle // Tag trait
   ```
 - [ ] **Vehicle physics**
   - Arcade car model (not realistic simulation)
@@ -87,10 +90,11 @@ car-ball/
   - Team color material
 
 ### 1.2 Ball System
+
 - [ ] **Ball traits**
   ```typescript
-  IsBall            // Tag trait
-  BallState         // lastTouchedBy, speed
+  IsBall // Tag trait
+  BallState // lastTouchedBy, speed
   ```
 - [ ] **Ball physics**
   - Sphere collider
@@ -102,6 +106,7 @@ car-ball/
   - Trail when moving fast
 
 ### 1.3 Arena System
+
 - [ ] **Arena geometry**
   - Floor (100m x 70m)
   - Walls (driveable)
@@ -118,10 +123,11 @@ car-ball/
   - Reset ball + cars to positions
 
 ### 1.4 Match System
+
 - [ ] **Match state**
   ```typescript
-  MatchState        // phase, timeRemaining, score
-  MatchConfig       // duration, teamSize
+  MatchState // phase, timeRemaining, score
+  MatchConfig // duration, teamSize
   ```
 - [ ] **Scoring**
   - Detect goal
@@ -133,6 +139,7 @@ car-ball/
   - Overtime on tie
 
 ### 1.5 Camera System
+
 - [ ] **Ball cam**
   - Always look at ball
   - Smooth follow behind car
@@ -142,12 +149,14 @@ car-ball/
   - Look direction = car direction
 
 ### 1.6 Basic HUD
+
 - [ ] Score display (Blue vs Orange)
 - [ ] Timer
 - [ ] Boost meter
 - [ ] Ball indicator (off-screen arrow)
 
 ### Phase 1 Deliverable
+
 ✅ Free play mode: drive around, hit ball, score goals
 
 ---
@@ -157,6 +166,7 @@ car-ball/
 > Goal: Make it feel like Rocket League. Add advanced mechanics.
 
 ### 2.1 Advanced Vehicle Mechanics
+
 - [ ] **Dodge/flip**
   - Front flip (forward momentum)
   - Side flip (lateral dodge)
@@ -177,6 +187,7 @@ car-ball/
   - Maintain momentum
 
 ### 2.2 Ball Mechanics
+
 - [ ] **Hit detection**
   - Hit power based on car speed
   - Hit direction based on car orientation
@@ -186,6 +197,7 @@ car-ball/
   - Trajectory preview (optional)
 
 ### 2.3 Visual Polish
+
 - [ ] **Car model**
   - Low-poly car mesh
   - Animated wheels
@@ -203,6 +215,7 @@ car-ball/
   - Speed lines at high velocity
 
 ### 2.4 Audio
+
 - [ ] **Sound effects**
   - Engine sound (pitch = speed)
   - Boost sound
@@ -215,6 +228,7 @@ car-ball/
   - In-game music (subtle)
 
 ### 2.5 Menus & UI
+
 - [ ] **Main menu**
   - Play button
   - Settings
@@ -234,6 +248,7 @@ car-ball/
   - Rematch button
 
 ### Phase 2 Deliverable
+
 ✅ Polished single-player experience with all core mechanics
 
 ---
@@ -243,6 +258,7 @@ car-ball/
 > Goal: Play with friends online.
 
 ### 3.1 Networking Foundation
+
 - [ ] **Choose stack**
   - Option A: Partykit (easiest)
   - Option B: WebRTC peer-to-peer
@@ -253,7 +269,9 @@ car-ball/
   - Handle disconnects
 
 ### 3.2 State Synchronization
+
 - [ ] **Sync protocol**
+
   ```typescript
   // Server → Client (20-60 Hz)
   GameState {
@@ -270,6 +288,7 @@ car-ball/
     throttle, steer, jump, boost, airRoll
   }
   ```
+
 - [ ] **Authority model**
   - Host runs physics (P2P)
   - Or: Server authoritative (dedicated)
@@ -279,6 +298,7 @@ car-ball/
   - Extrapolate on packet loss
 
 ### 3.3 Lobby System
+
 - [ ] **Create game**
   - Select mode (1v1, 2v2, 3v3)
   - Get shareable code
@@ -292,6 +312,7 @@ car-ball/
   - Handle player leaving
 
 ### 3.4 Gameplay Sync
+
 - [ ] **Ball sync**
   - Server authoritative
   - Clients predict locally
@@ -304,6 +325,7 @@ car-ball/
   - Sync pickups
 
 ### 3.5 Teams
+
 - [ ] **Team assignment**
   - Blue vs Orange
   - Auto-balance option
@@ -312,6 +334,7 @@ car-ball/
   - Kickoff positions
 
 ### Phase 3 Deliverable
+
 ✅ Online multiplayer with friends (1v1, 2v2, 3v3)
 
 ---
@@ -321,6 +344,7 @@ car-ball/
 > Goal: Replayability, progression, polish.
 
 ### 4.1 AI Opponent
+
 - [ ] **Basic AI**
   - Chase ball
   - Hit toward goal
@@ -331,6 +355,7 @@ car-ball/
   - Hard: aerials, saves
 
 ### 4.2 Training Mode
+
 - [ ] **Free play**
   - Unlimited time
   - Reset ball button
@@ -341,6 +366,7 @@ car-ball/
   - Goalie practice
 
 ### 4.3 Cosmetics
+
 - [ ] **Car bodies**
   - Different shapes
   - Same hitbox
@@ -354,6 +380,7 @@ car-ball/
   - Custom celebrations
 
 ### 4.4 Stats & Progression
+
 - [ ] **Match stats**
   - Goals, assists, saves
   - Shots, touches
@@ -369,6 +396,7 @@ car-ball/
   - etc.
 
 ### 4.5 Quality of Life
+
 - [ ] **Replay system**
   - Save last goal
   - Watch from any angle
@@ -384,22 +412,23 @@ car-ball/
 
 ## Milestones Summary
 
-| Milestone | Deliverable | Timeline |
-|-----------|-------------|----------|
-| **M1** | Driveable car + ball + goals | Week 1 |
-| **M2** | Complete free play mode | Week 2 |
-| **M3** | All mechanics (dodge, aerial, wall drive) | Week 3 |
-| **M4** | Polish (audio, effects, menus) | Week 4 |
-| **M5** | Multiplayer lobby + sync | Week 5-6 |
-| **M6** | Multiplayer polish | Week 7 |
-| **M7** | AI + training mode | Week 8 |
-| **M8** | Cosmetics + progression | Week 9+ |
+| Milestone | Deliverable                               | Timeline |
+| --------- | ----------------------------------------- | -------- |
+| **M1**    | Driveable car + ball + goals              | Week 1   |
+| **M2**    | Complete free play mode                   | Week 2   |
+| **M3**    | All mechanics (dodge, aerial, wall drive) | Week 3   |
+| **M4**    | Polish (audio, effects, menus)            | Week 4   |
+| **M5**    | Multiplayer lobby + sync                  | Week 5-6 |
+| **M6**    | Multiplayer polish                        | Week 7   |
+| **M7**    | AI + training mode                        | Week 8   |
+| **M8**    | Cosmetics + progression                   | Week 9+  |
 
 ---
 
 ## What to Copy from Sandbox
 
 ### Keep (copy to new repo)
+
 ```
 src/ecs/
 ├── index.ts              # World setup, actions pattern
@@ -419,6 +448,7 @@ src/ecs/
 ```
 
 ### Don't need
+
 ```
 src/ecs/
 ├── player/               # Character controller (not car)
@@ -428,6 +458,7 @@ src/ecs/
 ```
 
 ### Modify heavily
+
 ```
 - Input system (car controls, not character)
 - Camera system (ball cam)
@@ -454,23 +485,27 @@ When starting the new repo:
 ## Success Metrics
 
 ### Prototype (Phase 1)
+
 - Can drive car around arena
 - Can hit ball
 - Can score goals
 - Game resets after goal
 
 ### MVP (Phase 2)
+
 - Feels like Rocket League
 - All mechanics work (jump, dodge, boost, aerial)
 - Looks good (low-poly aesthetic)
 - Sounds good
 
 ### Launch (Phase 3)
+
 - Can play with friends online
 - Stable netcode
 - No major bugs
 
 ### Growth (Phase 4)
+
 - Returning players
 - Community sharing
 - Cosmetics engagement

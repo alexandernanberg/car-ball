@@ -97,9 +97,6 @@ export const actions = createActions((w) => ({
 // Re-export physics traits for convenience
 export * from './physics'
 
-// Re-export player traits
-export * from './player'
-
 // Re-export camera traits
 export * from './camera'
 

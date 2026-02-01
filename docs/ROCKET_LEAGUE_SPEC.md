@@ -7,6 +7,7 @@ A browser-based car soccer game inspired by Rocket League. Players control rocke
 **Name:** Car Ball
 
 **Art Style:** Arcade / Low-poly
+
 - Clean, readable visuals
 - Stylized but not too cartoony
 - Similar vibe to Rocket League but simpler geometry
@@ -18,9 +19,11 @@ A browser-based car soccer game inspired by Rocket League. Players control rocke
 ## Core Gameplay
 
 ### The Pitch
+
 > Drive rocket-powered cars, hit a giant ball, score goals. Simple to learn, hard to master.
 
 ### Core Loop
+
 1. Spawn in arena
 2. Drive toward ball
 3. Hit ball toward opponent's goal
@@ -30,6 +33,7 @@ A browser-based car soccer game inspired by Rocket League. Players control rocke
 7. Win match
 
 ### Match Structure
+
 - **Match duration:** 5 minutes (configurable)
 - **Overtime:** Sudden death if tied (first goal wins)
 - **Team sizes:** 1v1, 2v2, 3v3
@@ -40,6 +44,7 @@ A browser-based car soccer game inspired by Rocket League. Players control rocke
 ## Vehicles
 
 ### Physics Model
+
 ```
 Mass: ~150 units
 Max speed (no boost): 23 m/s
@@ -56,26 +61,29 @@ Hitbox: Oriented bounding box (simplified)
 ```
 
 ### Controls
-| Input | Action |
-|-------|--------|
-| W / Up | Accelerate |
-| S / Down | Reverse / Brake |
-| A / Left | Steer left |
-| D / Right | Steer right |
-| Space | Jump (tap) / Dodge (double-tap with direction) |
-| Shift / RMB | Boost |
-| Q / E | Air roll left/right |
-| Mouse | Camera control (optional) |
+
+| Input       | Action                                         |
+| ----------- | ---------------------------------------------- |
+| W / Up      | Accelerate                                     |
+| S / Down    | Reverse / Brake                                |
+| A / Left    | Steer left                                     |
+| D / Right   | Steer right                                    |
+| Space       | Jump (tap) / Dodge (double-tap with direction) |
+| Shift / RMB | Boost                                          |
+| Q / E       | Air roll left/right                            |
+| Mouse       | Camera control (optional)                      |
 
 ### Movement Mechanics
 
 #### Ground Movement
+
 - Arcade-style car physics (not simulation)
 - Drifting on sharp turns
 - Powerslide with handbrake
 - Can drive on walls and ceiling (magnetic grip)
 
 #### Jumping
+
 - **Single jump:** Instant upward impulse
 - **Double jump:** Second impulse (must be within 1.5s of first)
 - **Dodge:** Directional flip with ball hit power
@@ -85,6 +93,7 @@ Hitbox: Oriented bounding box (simplified)
   - Diagonal: Combined
 
 #### Boost
+
 - **Capacity:** 100 units
 - **Usage:** 33 units/second while boosting
 - **Small pads:** +12 boost, respawn in 4s
@@ -92,6 +101,7 @@ Hitbox: Oriented bounding box (simplified)
 - **Start of match:** 33 boost
 
 #### Aerials
+
 - Use boost in air to fly
 - Air roll for orientation
 - Most advanced mechanic - skill ceiling
@@ -101,6 +111,7 @@ Hitbox: Oriented bounding box (simplified)
 ## Ball
 
 ### Physics
+
 ```
 Radius: 1.0m (92 units in RL)
 Mass: ~30 units
@@ -112,6 +123,7 @@ Gravity: Same as cars (simpler) or slightly less
 ```
 
 ### Ball-Car Interaction
+
 - Ball hit force based on:
   - Car velocity at impact
   - Car orientation (nose hits harder)
@@ -123,6 +135,7 @@ Gravity: Same as cars (simpler) or slightly less
 ## Arena
 
 ### Dimensions
+
 ```
 Length: 100m (goal to goal)
 Width: 70m
@@ -134,6 +147,7 @@ Goal depth: 3m
 ```
 
 ### Layout
+
 ```
 +--------------------------------------------------+
 |                                                  |
@@ -150,6 +164,7 @@ Goal depth: 3m
 ```
 
 ### Surfaces
+
 - **Floor:** Standard friction
 - **Walls:** Driveable (curved transition from floor)
 - **Ceiling:** Driveable
@@ -157,7 +172,9 @@ Goal depth: 3m
 - **Back wall:** Behind goals, ball bounces off
 
 ### Visual Style
+
 **Arcade / Low-Poly** with neon accents:
+
 - Simple geometry (low-poly cars, smooth arena)
 - Bright, readable colors
 - Glow effects on boost trails, ball, goals
@@ -170,14 +187,17 @@ Goal depth: 3m
 ## Game Modes
 
 ### MVP (Phase 1)
+
 - **1v1 Local:** You vs AI or split screen
 - **Free Play:** Practice mode, no timer
 
 ### Phase 2
+
 - **1v1 Online:** Multiplayer
 - **2v2 / 3v3:** Team modes
 
 ### Phase 3 (Stretch)
+
 - **Ranked:** Matchmaking with skill rating
 - **Custom Games:** Private lobbies
 - **Training:** Specific mechanic drills
@@ -187,6 +207,7 @@ Goal depth: 3m
 ## Multiplayer Architecture
 
 ### Networking Model
+
 ```
 Option A: Client-Server (Authoritative)
 - Server runs physics
@@ -212,6 +233,7 @@ Option C: Rollback Netcode
 **Recommendation:** Start with Option B (P2P with host) using WebRTC or Partykit. Upgrade to Option A if game gets popular.
 
 ### State Sync
+
 ```typescript
 // Sync these every tick (60Hz ideal, 20Hz minimum)
 interface GameState {
@@ -240,6 +262,7 @@ interface PlayerInput {
 ```
 
 ### Latency Handling
+
 - Input delay: 0-2 frames acceptable
 - Interpolate remote players (buffer 2-3 states)
 - Extrapolate on packet loss
@@ -250,6 +273,7 @@ interface PlayerInput {
 ## Technical Requirements
 
 ### Performance Targets
+
 - **FPS:** 60 (target), 30 (minimum)
 - **Physics tick:** 60Hz fixed timestep
 - **Network tick:** 20-60Hz (configurable)
@@ -257,12 +281,14 @@ interface PlayerInput {
 - **Bundle size:** <5MB (compressed)
 
 ### Browser Support
+
 - Chrome, Firefox, Edge, Safari
 - WebGL 2.0
 - WebRTC for P2P
 - Gamepad API
 
 ### Mobile (Stretch)
+
 - Touch controls
 - Lower quality settings
 - Landscape only
@@ -272,6 +298,7 @@ interface PlayerInput {
 ## UI/UX
 
 ### HUD
+
 ```
 +--------------------------------------------------+
 |  [0]  BLUE           3:42           ORANGE  [2]  |
@@ -293,6 +320,7 @@ interface PlayerInput {
 - Speed indicator (optional)
 
 ### Menus
+
 1. **Main Menu:** Play, Training, Settings
 2. **Mode Select:** 1v1, 2v2, 3v3
 3. **Match Found:** Countdown to start
@@ -300,6 +328,7 @@ interface PlayerInput {
 5. **Settings:** Controls, graphics, audio
 
 ### Celebrations
+
 - Goal explosion effect
 - Slow-mo replay (stretch)
 - Confetti/particles
@@ -309,6 +338,7 @@ interface PlayerInput {
 ## Audio
 
 ### Sound Effects
+
 - Engine sound (pitch = speed)
 - Boost sound
 - Ball hit (varies by power)
@@ -317,6 +347,7 @@ interface PlayerInput {
 - Jump/dodge sounds
 
 ### Music
+
 - Menu music
 - In-game music (optional, low volume)
 - Goal celebration sting
@@ -326,6 +357,7 @@ interface PlayerInput {
 ## Progression (Post-MVP)
 
 ### Cosmetics
+
 - Car bodies
 - Decals/skins
 - Boost trails
@@ -333,6 +365,7 @@ interface PlayerInput {
 - Wheel types
 
 ### Stats
+
 - Goals, assists, saves, shots
 - Win/loss record
 - Aerial goals
@@ -343,6 +376,7 @@ interface PlayerInput {
 ## Development Phases
 
 ### Phase 1: Core Prototype (1-2 weeks)
+
 - [ ] Vehicle controller (drive, jump, boost)
 - [ ] Ball physics
 - [ ] Arena with goals
@@ -352,6 +386,7 @@ interface PlayerInput {
 - [ ] Ball cam
 
 ### Phase 2: Polish (1-2 weeks)
+
 - [ ] Dodge mechanics
 - [ ] Wall/ceiling driving
 - [ ] Aerials
@@ -360,6 +395,7 @@ interface PlayerInput {
 - [ ] Menus
 
 ### Phase 3: Multiplayer (2-3 weeks)
+
 - [ ] Lobby system
 - [ ] P2P connection
 - [ ] State sync
@@ -367,6 +403,7 @@ interface PlayerInput {
 - [ ] Teams
 
 ### Phase 4: Features (Ongoing)
+
 - [ ] AI opponent
 - [ ] Ranked mode
 - [ ] Cosmetics

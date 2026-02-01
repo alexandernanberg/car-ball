@@ -10,7 +10,6 @@ The root component that creates a Three.js renderer, scene, and camera:
 
 ```tsx
 import {Canvas} from '@react-three/fiber'
-
 ;<Canvas
   camera={{position: [0, 5, 10], fov: 75}}
   shadows
@@ -229,7 +228,6 @@ For many identical objects:
 
 ```tsx
 import {Instances, Instance} from '@react-three/drei'
-
 ;<Instances limit={1000}>
   <boxGeometry />
   <meshStandardMaterial />
