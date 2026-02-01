@@ -2,7 +2,6 @@ import {Loader, OrbitControls, Sky as SkyShader, Stats} from '@react-three/drei'
 import {Canvas} from '@react-three/fiber'
 import {WorldProvider} from 'koota/react'
 import {useReducer} from 'react'
-import {InputManager} from '~/components/input-manager'
 import {
   DirectionalLight,
   HemisphereLight,
@@ -10,7 +9,8 @@ import {
 } from '~/components/lights'
 import {world} from '~/ecs'
 import {PhysicsProvider} from '~/ecs/physics'
-import {Playground} from '~/scenes/playground'
+import {GameScene} from '~/game/GameScene'
+import {HUD} from '~/ui'
 import {DebugControls, useControls} from './components/debug-controls'
 
 export function Root() {
@@ -18,11 +18,12 @@ export function Root() {
     <>
       {/* WorldProvider makes the ECS world available to all components */}
       <WorldProvider world={world}>
-        <Canvas camera={{position: [6, 6, -4]}} shadows>
+        <Canvas camera={{position: [0, 10, -40], fov: 90}} shadows>
           <DebugControls>
             <App />
           </DebugControls>
         </Canvas>
+        <HUD />
       </WorldProvider>
       <Loader />
     </>
@@ -36,7 +37,6 @@ function App() {
     'Camera',
     {
       debug: {value: false},
-      showOrbitRings: {value: false},
     },
     {expanded: false, index: 0},
   )
@@ -48,8 +48,8 @@ function App() {
   const physicsControls = useControls(
     'Physics',
     {
-      debug: {value: true},
-      gravity: {value: [0, -9.81, 0]},
+      debug: {value: false},
+      gravity: {value: [0, -30, 0]}, // Higher gravity for Rocket League feel
       _reset: {
         title: 'Reset',
         action: updatePhysicsKey,
@@ -61,8 +61,9 @@ function App() {
   return (
     <LightProvider debug={lightsControl.debug}>
       <Stats />
-      <OrbitControls target={[-2, 0, 6]} makeDefault={cameraControls.debug} />
-      <fog attach="fog" args={[0xffffff, 10, 90]} />
+      {cameraControls.debug && (
+        <OrbitControls target={[0, 0, 0]} makeDefault />
+      )}
       <Sky />
 
       <PhysicsProvider
@@ -70,11 +71,7 @@ function App() {
         debug={physicsControls.debug}
         gravity={physicsControls.gravity}
       >
-        <InputManager disablePointerLock={cameraControls.debug} />
-        <Playground
-          debugCamera={cameraControls.debug}
-          showOrbitRings={cameraControls.showOrbitRings}
-        />
+        <GameScene />
       </PhysicsProvider>
     </LightProvider>
   )
@@ -109,10 +106,10 @@ function Sky() {
         position={position}
         castShadow
         shadow-mapSize={[4096, 4096]}
-        shadow-camera-left={-22}
-        shadow-camera-bottom={-22}
-        shadow-camera-right={22}
-        shadow-camera-top={22}
+        shadow-camera-left={-60}
+        shadow-camera-bottom={-60}
+        shadow-camera-right={60}
+        shadow-camera-top={60}
       />
     </>
   )
